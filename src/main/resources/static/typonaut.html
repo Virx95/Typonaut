@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Typonaut</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+
+    <div>
+        <input type="text" id="chooseName">
+        <button onclick="findOpponent()">FIND GAME</button>
+    </div>
+
+    <!--<div id="lookingDiv">-->
+        <!--LOOKING FOR OPPONENT-->
+    <!--</div>-->
+
+    <div id="gameField">
+        <h5 id="currentWord"></h5>
+        <input id="currentWordIn" type="text">
+        <button onclick="submitCurrentWord()" id="submitCurrentWord">SUBMIT</button>
+        <script>
+            // Enter key listener for submitting #currentWord value
+            $('#gameField').keydown(function (event) {
+                var keypressed = event.keyCode || event.which;
+                if (keypressed == 13) {
+                    submitCurrentWord()
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
