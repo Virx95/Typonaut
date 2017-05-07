@@ -74,8 +74,17 @@ function submitCurrentWord() {
             word: word,
             status: "PLAYING"
         }
-        Game.socket.send(JSON.stringify(payload))
-        $('#currentWordIn').val("")
+        if ($('#currentWordIn').val() == $('#currentWord').html()) {
+            Game.socket.send(JSON.stringify(payload))
+            $('#currentWordIn').val("")
+            var buzzer = $('#buzzer1')[0];
+            console.log(buzzer)
+            buzzer.play();
+        } else {
+            var buzzer = $('#buzzer2')[0];
+            console.log(buzzer)
+            buzzer.play();
+        }
     }
 }
 
