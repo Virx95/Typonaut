@@ -14,35 +14,40 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameEngine {
 
     public static void tryStartGame(WebSocketSession session, TextMessage message) throws Exception {
-        Optional<Typer> playerOne = TyponautSession.getBySessionId(session.getId());
-        if (playerOne.isPresent()) {
-            playerOne.get().getPlayer().setName(JsonConverter.getName(message));
-            Optional<Typer> playerTwo = TyponautSession.getLookingTyper();
-            if (playerTwo.isPresent()) {
-                playerOne.get().setStatus(Status.STARTING);
-                playerTwo.get().setStatus(Status.STARTING);
-                playerOne.get().broadcast(JsonConverter.getMessageString("Your opponent is " + playerTwo.get().getPlayer().getName(), Status.STARTING));
-                playerTwo.get().broadcast(JsonConverter.getMessageString("Your opponent is " + playerOne.get().getPlayer().getName(), Status.STARTING));
+        Optional<Typer> playerOneOpt = TyponautSession.getBySessionId(session.getId());
+        if (playerOneOpt.isPresent()) {
+            playerOneOpt.get().getPlayer().setName(JsonConverter.getName(message));
+            Optional<Typer> playerTwoOpt = TyponautSession.getLookingTyper();
+            if (playerTwoOpt.isPresent()) {
+                Typer playerOne = playerOneOpt.get();
+                Typer playerTwo = playerTwoOpt.get();
+                playerOne.setStatus(Status.STARTING);
+                playerTwo.setStatus(Status.STARTING);
+                playerOne.broadcast(JsonConverter.getMessageString("Your opponent is " + playerTwoOpt.get().getPlayer().getName(), Status.STARTING));
+                playerTwo.broadcast(JsonConverter.getMessageString("Your opponent is " + playerOne.getPlayer().getName(), Status.STARTING));
 
                 List<String> words = Words.getAllWords();
-                Collections.shuffle(words);
-                playerOne.get().setWords(words);
-                playerTwo.get().setWords(words);
+                int randomNum = ThreadLocalRandom.current().nextInt(0, words.size());
+                playerOne.setWord(words.get(randomNum));
+                playerTwo.setWord(words.get(randomNum));
+                playerOne.setOpponent(playerTwo);
+                playerTwo.setOpponent(playerOne);
 
                 startCountDownTimer(playerOne, playerTwo);
             } else {
-                playerOne.get().setStatus(Status.LOOKING);
-                playerOne.get().broadcast(JsonConverter.getLookingStatus());
+                playerOneOpt.get().setStatus(Status.LOOKING);
+                playerOneOpt.get().broadcast(JsonConverter.getLookingStatus());
             }
         }
     }
 
-    public static void startCountDownTimer(Optional<Typer> playerOne, Optional<Typer> playerTwo) {
-        StartTimer task = new StartTimer(playerOne.get(), playerTwo.get());
+    public static void startCountDownTimer(Typer playerOne, Typer playerTwo) {
+        StartTimer task = new StartTimer(playerOne, playerTwo);
         Timer timer = new Timer();
         timer.schedule(task, 0, 1000);
     }
@@ -51,10 +56,14 @@ public class GameEngine {
         Optional<Typer> playerOpt = TyponautSession.getBySessionId(session.getId());
         if (playerOpt.isPresent()) {
             Typer player = playerOpt.get();
-            if (JsonConverter.getWord(message).equals(player.getWords().get(player.getWordCounter()))) {
-                player.incrementCounter();
-                String nextWord = player.getWords().get(player.getWordCounter());
-                player.broadcast(JsonConverter.getWordGuess(nextWord));
+            if (JsonConverter.getWord(message).equals(player.getWord())) {
+                if (player.getOpponent().getStatus() == Status.GAME_OVER) {
+                    player.broadcast(JsonConverter.getMessageString("You lost!", Status.GAME_OVER));
+                } else {
+                    player.broadcast(JsonConverter.getMessageString("You won!", Status.GAME_OVER));
+                }
+                player.setOpponent(null);
+                player.setStatus(Status.GAME_OVER);
             }
         }
     }

@@ -9,17 +9,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TyponautSession {
 
-    private static final ConcurrentHashMap<Long, Typer> typers = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Typer> typers = new ConcurrentHashMap<>();
 
-    public static void addTyper(Typer typer) {
-        typers.put(typer.getId(), typer);
+    public static void addTyper(String sessid, Typer typer) {
+        typers.put(sessid, typer);
     }
 
     public static Optional<Typer> getBySessionId(String sessId) {
-        return typers.values()
-                .stream()
-                .filter(s -> s.getSession().getId().equals(sessId))
-                .findAny();
+        return Optional.ofNullable(typers.get(sessId));
     }
 
     public static Optional<Typer> getLookingTyper() {
@@ -27,5 +24,9 @@ public class TyponautSession {
                 .stream()
                 .filter(s -> s.getStatus() == Status.LOOKING)
                 .findAny();
+    }
+
+    public static void removeTyper(String sessid) {
+        typers.remove(sessid);
     }
 }

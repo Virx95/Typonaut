@@ -13,8 +13,10 @@ public class Typer {
     private final long id;
     private Status status;
     private Player player;
+    private String word;
     private List<String> words;
     private int wordCounter = 0;
+    private Typer opponent;
 
     public Typer(WebSocketSession session, Player player) {
         this.session = session;
@@ -73,5 +75,21 @@ public class Typer {
 
     public void incrementCounter() {
         wordCounter++;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public Typer getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(Typer opponent) {
+        this.opponent = opponent;
     }
 }

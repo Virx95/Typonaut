@@ -23,7 +23,7 @@ public class SimpleWebSocketHandler extends TextWebSocketHandler {
         Player player = new Player();
         player = playerRepository.save(player);
 
-        TyponautSession.addTyper(new Typer(session, player));
+        TyponautSession.addTyper(session.getId(), new Typer(session, player));
     }
 
     @Override
@@ -40,6 +40,7 @@ public class SimpleWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
             throws Exception {
+        TyponautSession.removeTyper(session.getId());
         System.out.println(status);
     }
 }

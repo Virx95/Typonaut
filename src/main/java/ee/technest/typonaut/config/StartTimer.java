@@ -36,8 +36,8 @@ public class StartTimer extends TimerTask {
             }
             playerOne.setStatus(Status.PLAYING);
             playerTwo.setStatus(Status.PLAYING);
-            playerOne.broadcast(JsonConverter.getWordGuess(playerOne.getWords().get(playerOne.getWordCounter())));
-            playerTwo.broadcast(JsonConverter.getWordGuess(playerTwo.getWords().get(playerTwo.getWordCounter())));
+            playerOne.broadcast(JsonConverter.getWordGuess(playerOne.getWord()));
+            playerTwo.broadcast(JsonConverter.getWordGuess(playerTwo.getWord()));
             cancel();
         } else {
             countDown--;

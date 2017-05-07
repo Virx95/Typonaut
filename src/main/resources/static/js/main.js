@@ -31,6 +31,12 @@ Game.connect = (function() {
             case "PLAYING":
                 setWord(data.word);
                 break;
+            case "STARTING":
+                startGame(data.message);
+                break;
+            case "GAME_OVER":
+                gameOver(data.message);
+                break;
         }
     };
 
@@ -50,11 +56,11 @@ function findOpponent() {
 }
 
 function showLookingDiv() {
-
+    $('#lookingDiv').show()
 }
 
 function countDown(count) {
-
+    $('#timer').html(count)
 }
 
 function setWord(word) {
@@ -70,4 +76,17 @@ function submitCurrentWord() {
         }
         Game.socket.send(JSON.stringify(payload))
     }
+}
+
+function startGame(message) {
+    $('#lookingDiv').hide()
+    $('#message').html(message)
+    $('#messageDiv').show()
+    $('#gameField').show()
+    $('#timerDiv').show()
+}
+
+function gameOver(message) {
+    $('#resultDiv').show()
+    $('#result').html(message)
 }
