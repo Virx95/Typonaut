@@ -74,17 +74,7 @@ function submitCurrentWord() {
             word: word,
             status: "PLAYING"
         }
-        if ($('#currentWordIn').val() == $('#currentWord').html()) {
-            Game.socket.send(JSON.stringify(payload))
-            $('#currentWordIn').val("")
-            var buzzer = $('#buzzer1')[0];
-            console.log(buzzer)
-            buzzer.play();
-        } else {
-            var buzzer = $('#buzzer2')[0];
-            console.log(buzzer)
-            buzzer.play();
-        }
+        Game.socket.send(JSON.stringify(payload))
     }
 }
 
@@ -99,4 +89,14 @@ function startGame(message) {
 function gameOver(message) {
     $('#resultDiv').show()
     $('#result').html(message)
+	if (message == "You won!") {
+            $('#currentWordIn').val("")
+            var buzzer = $('#buzzer1')[0];
+            console.log(buzzer)
+            buzzer.play();
+        } else {
+            var buzzer = $('#buzzer2')[0];
+            console.log(buzzer)
+            buzzer.play();
+        }
 }
