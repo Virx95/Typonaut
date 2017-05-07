@@ -75,6 +75,7 @@ function submitCurrentWord() {
             status: "PLAYING"
         }
         Game.socket.send(JSON.stringify(payload))
+        $('#currentWordIn').val("")
     }
 }
 
