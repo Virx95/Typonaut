@@ -17,9 +17,10 @@
         <input type="text" id="chooseName" placeholder="Your name">
         <button onclick="findOpponent()">FIND GAME</button>
     </div>
-
+	
     <div id="lookingDiv">
-        LOOKING FOR OPPONENT
+        <h1>LOOKING FOR OPPONENT</h1>
+		<div class="loader"></div>
     </div>
     <script> $('#lookingDiv').hide() </script>
 
@@ -32,15 +33,16 @@
 
     <div id="gameField">
 		<div id="gameField1">
-		  	<h1 id="currentWord"></h1>
-		  	<h1 id="resultDiv">
-				<p id="result"></p>
-		 	</h1>
-		  	<input id="currentWordIn" placeholder="Write here.." type="text">
+		  <h1 id="currentWord"></h1>
+		  <h1 id="resultDiv">
+			<p id="result"></p>
+		  </h1>
+		  <div id="content-1">
+			<input id="currentWordIn" placeholder="Write here.." type="text">
 			<button onclick="submitCurrentWord()" id="submitCurrentWord">SUBMIT</button>
+		  </div>
 		</div>
-	    
-	    	<div id="messageDiv">
+		<div id="messageDiv">
 			<p id="message"></p>
 		</div>
 		<script> $('#messageDiv').hide() </script>
