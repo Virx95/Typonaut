@@ -95,6 +95,8 @@ function startGame(message) {
     $('#gameField').show()
 	$('#currentWord').show()
     $('#timerDiv').show()
+	var buzzer = $('#buzzer4')[0];
+	buzzer.play()
 
 
 }
