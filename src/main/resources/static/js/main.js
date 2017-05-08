@@ -85,23 +85,28 @@ function submitCurrentWord() {
 
 function startGame(message) {
     $('#lookingDiv').hide()
+    $('#nameInput').hide()
     $('#message').html(message)
     $('#messageDiv').show()
     $('#gameField').show()
     $('#timerDiv').show()
+
 }
 
 function gameOver(message) {
-    $('#resultDiv').show()
-    $('#result').html(message)
+	$('#currentWord').hide()
+        $('#resultDiv').show()
+        $('#result').html(message)
+	$('#currentWordIn').val("")
 	if (message == "You won!") {
-            $('#currentWordIn').val("")
-            var buzzer = $('#buzzer1')[0];
-            console.log(buzzer)
-            buzzer.play();
-        } else {
-            var buzzer = $('#buzzer3')[0];
-            console.log(buzzer)
-            buzzer.play();
-        }
+		var buzzer = $('#buzzer1')[0];
+		console.log(buzzer)
+		buzzer.play();
+	} else {
+		var buzzer = $('#buzzer3')[0];
+		console.log(buzzer)
+		buzzer.play();
+	}
+	$('#gameField').hide()
+	$('#nameInput').show()
 }
