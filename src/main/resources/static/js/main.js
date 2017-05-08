@@ -37,6 +37,9 @@ Game.connect = (function() {
             case "GAME_OVER":
                 gameOver(data.message);
                 break;
+            case "SHOW_RESULT":
+                showResult(data.id);
+                break;
         }
     };
 
@@ -110,8 +113,32 @@ function gameOver(message) {
 		buzzer.play();
 	}
 	$('#gameField').hide()
-	$('#nameInput').show()
-	$('#timerDiv').hide()
 	$('#timerDiv').hide()
 	$('#currentWord').html("")
+}
+
+
+function showResult(id) {
+    $.get("/result/" + id, function(data) {
+        console.log(data)
+        $('#resultScreen').show()
+        var head = "<table class='table'><thead><tr><td>" + data.yourName + " " + data.yourScore + "</td><td></td><td>" + data.opponentName + " " + data.opponentScore + "</td></tr></thead>"
+        var bodyStart = "<tbody><tr><td>Your time</td><td>Word</td><td>Opponent time</td></tr>"
+        head = head + bodyStart
+        var row
+        for (var i = 0; i < data.games.length; i++) {
+            row = "<tr><td>" + data.games[i].yourTime + "</td><td>" + data.games[i].word + "</td><td>" + data.games[i].opponentTime + "</td></tr>"
+            head = head + row
+        }
+        var closure = "</tbody></table>"
+        var table = head + closure;
+        $('#tableDiv').html(table)
+    });
+}
+
+function reset() {
+    $('#resultScreen').hide()
+    $('#nameInput').show()
+    Game.socket.close()
+    Game.connect()
 }

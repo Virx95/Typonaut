@@ -67,11 +67,10 @@ public class Json {
         }
     }
 
-    public static String messageWithId(String message, String id) throws JsonProcessingException {
-        MessageAndStatusAndId messageDTO = new MessageAndStatusAndId();
-        messageDTO.setId(id);
-        messageDTO.setMessage(message);
-        messageDTO.setStatus(Status.GAME_OVER);
-        return mapper.writeValueAsString(messageDTO);
+    public static String resultId(String id) throws JsonProcessingException {
+        StatusAndId statusAndId = new StatusAndId();
+        statusAndId.setId(id);
+        statusAndId.setStatus(Status.SHOW_RESULT);
+        return mapper.writeValueAsString(statusAndId);
     }
 }

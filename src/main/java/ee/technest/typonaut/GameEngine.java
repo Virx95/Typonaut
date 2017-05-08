@@ -59,11 +59,13 @@ public class GameEngine {
             if (Json.getWord(message).equals(player.getWord())) {
                 player.setEndTime(System.currentTimeMillis());
                 if (player.getOpponent().getStatus() == Status.GAME_OVER) {
-                    player.broadcast(Json.messageWithId("You lost!", player.getId()));
+                    player.broadcast(Json.getMessageString("You lost!", Status.GAME_OVER));
+                    player.broadcast(Json.resultId(player.getId()));
+                    player.getOpponent().broadcast(Json.resultId(player.getOpponent().getId()));
                     player.getTimeoutTimer().cancel();
                     gameDao.save(player, player.getOpponent());
                 } else {
-                    player.broadcast(Json.messageWithId("You won!", player.getId()));
+                    player.broadcast(Json.getMessageString("You won!", Status.GAME_OVER));
                     startTimeOutTimer(player.getOpponent(), gameDao);
                 }
                 player.setStatus(Status.GAME_OVER);

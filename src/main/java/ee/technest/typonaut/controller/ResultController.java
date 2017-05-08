@@ -18,7 +18,7 @@ public class ResultController {
         this.gameDao = gameDao;
     }
 
-    @RequestMapping(value = "/results/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
     public Result getAllGames(@PathVariable("id") String id) {
         return DtoConverter.getResult(gameDao.findById(id), id);
     }

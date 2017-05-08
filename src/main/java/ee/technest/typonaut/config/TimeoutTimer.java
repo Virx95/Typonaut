@@ -25,7 +25,9 @@ public class TimeoutTimer extends TimerTask {
     public void run() {
         if (countDown == 0) {
             try {
-                player.broadcast(Json.messageWithId("You lost!", player.getId()));
+                player.broadcast(Json.getMessageString("You lost!", Status.GAME_OVER));
+                player.broadcast(Json.resultId(player.getId()));
+                player.getOpponent().broadcast(Json.resultId(player.getOpponent().getId()));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
