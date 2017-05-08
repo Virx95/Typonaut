@@ -60,10 +60,11 @@ function findOpponent() {
 
 function showLookingDiv() {
     $('#lookingDiv').show()
+	$('#nameInput').hide()
 }
 
 function countDown(count) {
-    $('#timer').html(count)
+    $('#currentWord').html(count)
 }
 
 function setWord(word) {
