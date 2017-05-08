@@ -6,6 +6,7 @@ public enum Status {
     STARTING,
     PLAYING,
     COUNTDOWN,
+    TIME_OUT,
     GAME_OVER,
     NONE,
     PING

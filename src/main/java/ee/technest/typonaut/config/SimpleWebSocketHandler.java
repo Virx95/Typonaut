@@ -1,11 +1,10 @@
 package ee.technest.typonaut.config;
 
+import ee.technest.typonaut.GameDao;
 import ee.technest.typonaut.GameEngine;
 import ee.technest.typonaut.json.JsonConverter;
-import ee.technest.typonaut.modal.Player;
-import ee.technest.typonaut.modal.PlayerRepository;
 import ee.technest.typonaut.modal.Status;
-import ee.technest.typonaut.modal.Typer;
+import ee.technest.typonaut.modal.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -16,14 +15,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class SimpleWebSocketHandler extends TextWebSocketHandler {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private GameDao gameDao;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        Player player = new Player();
-        player = playerRepository.save(player);
-
-        TyponautSession.addTyper(session.getId(), new Typer(session, player));
+        TyponautSession.addTyper(session.getId(), new Player(session));
     }
 
     @Override
@@ -33,7 +29,7 @@ public class SimpleWebSocketHandler extends TextWebSocketHandler {
             GameEngine.tryStartGame(session, message);
         }
         else if (requestStatus == Status.PLAYING) {
-            GameEngine.sendWord(session, message);
+            GameEngine.retrieveWord(session, message, gameDao);
         }
     }
 

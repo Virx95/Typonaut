@@ -3,17 +3,17 @@ package ee.technest.typonaut.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import ee.technest.typonaut.json.JsonConverter;
 import ee.technest.typonaut.modal.Status;
-import ee.technest.typonaut.modal.Typer;
+import ee.technest.typonaut.modal.Player;
 
 import java.util.TimerTask;
 
 public class StartTimer extends TimerTask {
 
-    private Typer playerOne;
-    private Typer playerTwo;
+    private Player playerOne;
+    private Player playerTwo;
     private int countDown = 3;
 
-    public StartTimer(Typer playerOne, Typer playerTwo) {
+    public StartTimer(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
     }
@@ -34,8 +34,11 @@ public class StartTimer extends TimerTask {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            long startTime = System.currentTimeMillis();
             playerOne.setStatus(Status.PLAYING);
             playerTwo.setStatus(Status.PLAYING);
+            playerOne.setStartTime(startTime);
+            playerTwo.setStartTime(startTime);
             playerOne.broadcast(JsonConverter.getWordGuess(playerOne.getWord()));
             playerTwo.broadcast(JsonConverter.getWordGuess(playerTwo.getWord()));
             cancel();

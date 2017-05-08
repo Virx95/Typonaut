@@ -48,6 +48,13 @@ public class JsonConverter {
         return mapper.writeValueAsString(countDown);
     }
 
+    public static String getTimeOut(int counter) throws JsonProcessingException {
+        CountDown countDown = new CountDown();
+        countDown.setCounter(counter);
+        countDown.setStatus(Status.TIME_OUT);
+        return mapper.writeValueAsString(countDown);
+    }
+
     public static String getWordGuess(String word) {
         WordGuess guess = new WordGuess();
         guess.setWord(word);

@@ -1,24 +1,97 @@
 package ee.technest.typonaut.modal;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
+import ee.technest.typonaut.config.TimeoutTimer;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+import java.io.IOException;
+
 public class Player {
-    
-    @Id
-    @GeneratedValue
-    private long id;
-    private String name;
-    private long score;
 
-    public long getId() {
+    private final WebSocketSession session;
+    private final String id;
+    private Status status;
+    private String name;
+    private String word;
+    private int wordCounter = 0;
+    private Player opponent;
+    private long startTime;
+    private long endTime;
+    private TimeoutTimer timeoutTimer;
+
+    public Player(WebSocketSession session) {
+        this.session = session;
+        this.id = session.getId();
+        this.status = Status.NONE;
+    }
+
+    public void broadcast(String message) {
+        try {
+            session.sendMessage(new TextMessage(message));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public WebSocketSession getSession() {
+        return session;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public int getWordCounter() {
+        return wordCounter;
+    }
+
+    public void setWordCounter(int wordCounter) {
+        this.wordCounter = wordCounter;
+    }
+
+    public void incrementCounter() {
+        wordCounter++;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public Player getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public String getName() {
@@ -29,11 +102,11 @@ public class Player {
         this.name = name;
     }
 
-    public long getScore() {
-        return score;
+    public TimeoutTimer getTimeoutTimer() {
+        return timeoutTimer;
     }
 
-    public void setScore(long score) {
-        this.score = score;
+    public void setTimeoutTimer(TimeoutTimer timeoutTimer) {
+        this.timeoutTimer = timeoutTimer;
     }
 }
