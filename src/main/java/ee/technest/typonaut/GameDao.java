@@ -31,7 +31,7 @@ public class GameDao {
         gameRepository.save(game);
     }
 
-    public List<Game> findAll() {
-        return gameRepository.findAll();
+    public List<Game> findById(String id) {
+        return gameRepository.findByP1IdOrP2Id(id, id);
     }
 }

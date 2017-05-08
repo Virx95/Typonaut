@@ -6,13 +6,14 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
 
-    <div>
+    <div id="nameInput">
         <input type="text" id="chooseName" placeholder="Your name">
         <button onclick="findOpponent()">FIND GAME</button>
     </div>
@@ -27,15 +28,26 @@
     </div>
     <script> $('#timerDiv').hide() </script>
 
-    <div id="messageDiv">
-        <p id="message"></p>
-    </div>
-    <script> $('#messageDiv').hide() </script>
+
 
     <div id="gameField">
-        <h5 id="currentWord"></h5>
-        <input id="currentWordIn" type="text">
-        <button onclick="submitCurrentWord()" id="submitCurrentWord">SUBMIT</button>
+		<div id="gameField1">
+		  	<h1 id="currentWord"></h1>
+		  	<h1 id="resultDiv">
+				<p id="result"></p>
+		 	</h1>
+		  	<input id="currentWordIn" placeholder="Write here.." type="text">
+			<button onclick="submitCurrentWord()" id="submitCurrentWord">SUBMIT</button>
+		</div>
+
+	    	<div id="messageDiv">
+			<p id="message"></p>
+		</div>
+		<script> $('#messageDiv').hide() </script>
+
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400' rel='stylesheet' type='text/css'>
+
+
         <script>
             // Enter key listener for submitting #currentWord value
             $('#gameField').keydown(function (event) {
@@ -47,13 +59,9 @@
         </script>
     </div>
     <script> $('#gameField').hide() </script>
-
-    <div id="resultDiv">
-        <p id="result"></p>
-    </div>
     <script> $('#resultDiv').hide() </script>
     <audio id="buzzer1" src="suc.wav" type="audio/wav"></audio>
     <audio id="buzzer2" src="fail.wav" type="audio/wav"></audio>
-    <!--<audio id="buzzer3" src="victory.wav" type="audio/wav"></audio>-->
+	<audio id="buzzer3" src="lose.mp3" type="audio/wav"></audio>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package ee.technest.typonaut.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import ee.technest.typonaut.json.JsonConverter;
+import ee.technest.typonaut.json.Json;
 import ee.technest.typonaut.modal.Status;
 import ee.technest.typonaut.modal.Player;
 
@@ -22,8 +22,8 @@ public class StartTimer extends TimerTask {
     public void run() {
 
         try {
-            playerOne.broadcast(JsonConverter.getCountDown(countDown));
-            playerTwo.broadcast(JsonConverter.getCountDown(countDown));
+            playerOne.broadcast(Json.getCountDown(countDown));
+            playerTwo.broadcast(Json.getCountDown(countDown));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -39,8 +39,8 @@ public class StartTimer extends TimerTask {
             playerTwo.setStatus(Status.PLAYING);
             playerOne.setStartTime(startTime);
             playerTwo.setStartTime(startTime);
-            playerOne.broadcast(JsonConverter.getWordGuess(playerOne.getWord()));
-            playerTwo.broadcast(JsonConverter.getWordGuess(playerTwo.getWord()));
+            playerOne.broadcast(Json.getWordGuess(playerOne.getWord()));
+            playerTwo.broadcast(Json.getWordGuess(playerTwo.getWord()));
             cancel();
         } else {
             countDown--;

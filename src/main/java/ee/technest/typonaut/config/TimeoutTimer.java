@@ -2,10 +2,9 @@ package ee.technest.typonaut.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import ee.technest.typonaut.GameDao;
-import ee.technest.typonaut.json.JsonConverter;
+import ee.technest.typonaut.json.Json;
 import ee.technest.typonaut.modal.Player;
 import ee.technest.typonaut.modal.Status;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.TimerTask;
 
@@ -26,7 +25,7 @@ public class TimeoutTimer extends TimerTask {
     public void run() {
         if (countDown == 0) {
             try {
-                player.broadcast(JsonConverter.getMessageString("You lost!", Status.GAME_OVER));
+                player.broadcast(Json.messageWithId("You lost!", player.getId()));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -36,7 +35,7 @@ public class TimeoutTimer extends TimerTask {
             gameDao.save(player, player.getOpponent());
         } else {
             try {
-                player.broadcast(JsonConverter.getTimeOut(countDown));
+                player.broadcast(Json.getTimeOut(countDown));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }

@@ -11,4 +11,5 @@ public interface GameRepository extends CrudRepository<Game, Long> {
     @Override
     List<Game> findAll();
 
+    List<Game> findByP1IdOrP2Id(String p1Id, String p2Id);
 }

@@ -2,7 +2,7 @@ package ee.technest.typonaut.config;
 
 import ee.technest.typonaut.GameDao;
 import ee.technest.typonaut.GameEngine;
-import ee.technest.typonaut.json.JsonConverter;
+import ee.technest.typonaut.json.Json;
 import ee.technest.typonaut.modal.Status;
 import ee.technest.typonaut.modal.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SimpleWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        Status requestStatus = JsonConverter.getRequestType(message.getPayload());
+        Status requestStatus = Json.getRequestType(message.getPayload());
         if (requestStatus == Status.LOOKING) {
             GameEngine.tryStartGame(session, message);
         }

@@ -75,28 +75,43 @@ function submitCurrentWord() {
             status: "PLAYING"
         }
         Game.socket.send(JSON.stringify(payload))
+    	if ($('#currentWordIn').val() != $('#currentWord').html()) {
+	    var buzzer = $('#buzzer2')[0];
+            console.log(buzzer)
+            buzzer.play();
+	}
     }
 }
 
 function startGame(message) {
     $('#lookingDiv').hide()
+	$('#nameInput').hide()
+	$('#resultDiv').hide()
     $('#message').html(message)
-    $('#messageDiv').show()
     $('#gameField').show()
+	$('#currentWord').show()
     $('#timerDiv').show()
+
+
 }
 
 function gameOver(message) {
+	$('#currentWord').hide()
     $('#resultDiv').show()
     $('#result').html(message)
+	$('#currentWordIn').val("")
 	if (message == "You won!") {
-            $('#currentWordIn').val("")
-            var buzzer = $('#buzzer1')[0];
-            console.log(buzzer)
-            buzzer.play();
-        } else {
-            var buzzer = $('#buzzer2')[0];
-            console.log(buzzer)
-            buzzer.play();
-        }
+		var buzzer = $('#buzzer1')[0];
+		console.log(buzzer)
+		buzzer.play();
+	} else {
+		var buzzer = $('#buzzer3')[0];
+		console.log(buzzer)
+		buzzer.play();
+	}
+	$('#gameField').hide()
+	$('#nameInput').show()
+	$('#timerDiv').hide()
+	$('#timerDiv').hide()
+	$('#currentWord').html("")
 }

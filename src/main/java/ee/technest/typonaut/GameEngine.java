@@ -4,7 +4,7 @@ package ee.technest.typonaut;
 import ee.technest.typonaut.config.StartTimer;
 import ee.technest.typonaut.config.TimeoutTimer;
 import ee.technest.typonaut.config.TyponautSession;
-import ee.technest.typonaut.json.JsonConverter;
+import ee.technest.typonaut.json.Json;
 import ee.technest.typonaut.modal.Status;
 import ee.technest.typonaut.modal.Player;
 import ee.technest.typonaut.words.Words;
@@ -21,15 +21,15 @@ public class GameEngine {
     public static void tryStartGame(WebSocketSession session, TextMessage message) throws Exception {
         Optional<Player> playerOneOpt = TyponautSession.getBySessionId(session.getId());
         if (playerOneOpt.isPresent()) {
-            playerOneOpt.get().setName(JsonConverter.getName(message));
+            playerOneOpt.get().setName(Json.getName(message));
             Optional<Player> playerTwoOpt = TyponautSession.getLookingTyper();
             if (playerTwoOpt.isPresent()) {
                 Player playerOne = playerOneOpt.get();
                 Player playerTwo = playerTwoOpt.get();
                 playerOne.setStatus(Status.STARTING);
                 playerTwo.setStatus(Status.STARTING);
-                playerOne.broadcast(JsonConverter.getMessageString("Your opponent is " + playerTwoOpt.get().getName(), Status.STARTING));
-                playerTwo.broadcast(JsonConverter.getMessageString("Your opponent is " + playerOne.getName(), Status.STARTING));
+                playerOne.broadcast(Json.getMessageString("Your opponent is " + playerTwoOpt.get().getName(), Status.STARTING));
+                playerTwo.broadcast(Json.getMessageString("Your opponent is " + playerOne.getName(), Status.STARTING));
 
                 List<String> words = Words.getAllWords();
                 int randomNum = ThreadLocalRandom.current().nextInt(0, words.size());
@@ -41,7 +41,7 @@ public class GameEngine {
                 startCountDownTimer(playerOne, playerTwo);
             } else {
                 playerOneOpt.get().setStatus(Status.LOOKING);
-                playerOneOpt.get().broadcast(JsonConverter.getLookingStatus());
+                playerOneOpt.get().broadcast(Json.getLookingStatus());
             }
         }
     }
@@ -56,14 +56,14 @@ public class GameEngine {
         Optional<Player> playerOpt = TyponautSession.getBySessionId(session.getId());
         if (playerOpt.isPresent()) {
             Player player = playerOpt.get();
-            if (JsonConverter.getWord(message).equals(player.getWord())) {
+            if (Json.getWord(message).equals(player.getWord())) {
                 player.setEndTime(System.currentTimeMillis());
                 if (player.getOpponent().getStatus() == Status.GAME_OVER) {
-                    player.broadcast(JsonConverter.getMessageString("You lost!", Status.GAME_OVER));
+                    player.broadcast(Json.messageWithId("You lost!", player.getId()));
                     player.getTimeoutTimer().cancel();
                     gameDao.save(player, player.getOpponent());
                 } else {
-                    player.broadcast(JsonConverter.getMessageString("You won!", Status.GAME_OVER));
+                    player.broadcast(Json.messageWithId("You won!", player.getId()));
                     startTimeOutTimer(player.getOpponent(), gameDao);
                 }
                 player.setStatus(Status.GAME_OVER);

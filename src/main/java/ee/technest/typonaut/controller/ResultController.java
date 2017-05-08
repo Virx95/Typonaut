@@ -2,12 +2,12 @@ package ee.technest.typonaut.controller;
 
 
 import ee.technest.typonaut.GameDao;
-import ee.technest.typonaut.modal.Game;
+import ee.technest.typonaut.controller.dto.DtoConverter;
+import ee.technest.typonaut.controller.dto.objects.Result;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class ResultController {
@@ -18,8 +18,8 @@ public class ResultController {
         this.gameDao = gameDao;
     }
 
-    @RequestMapping(value = "/results", method = RequestMethod.GET)
-    public List<Game> getAllGames() {
-        return gameDao.findAll();
+    @RequestMapping(value = "/results/{id}", method = RequestMethod.GET)
+    public Result getAllGames(@PathVariable("id") String id) {
+        return DtoConverter.getResult(gameDao.findById(id), id);
     }
 }

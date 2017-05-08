@@ -8,6 +8,8 @@ public enum Status {
     COUNTDOWN,
     TIME_OUT,
     GAME_OVER,
+    WON,
+    LOST,
     NONE,
     PING
 

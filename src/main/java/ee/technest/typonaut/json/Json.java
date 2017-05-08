@@ -8,7 +8,7 @@ import org.springframework.web.socket.TextMessage;
 
 import java.io.IOException;
 
-public class JsonConverter {
+public class Json {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -65,5 +65,13 @@ public class JsonConverter {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String messageWithId(String message, String id) throws JsonProcessingException {
+        MessageAndStatusAndId messageDTO = new MessageAndStatusAndId();
+        messageDTO.setId(id);
+        messageDTO.setMessage(message);
+        messageDTO.setStatus(Status.GAME_OVER);
+        return mapper.writeValueAsString(messageDTO);
     }
 }
