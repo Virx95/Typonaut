@@ -59,8 +59,21 @@ function findOpponent() {
 }
 
 function showLookingDiv() {
-    $('#lookingDiv').show()
+        $('#lookingDiv').show()
 	$('#nameInput').hide()
+	var buzzer = $('#buzzer2')[0];
+        buzzer.play();
+}
+
+function stopAll(e){
+    var currentElementId=$(e.currentTarget).attr("id");
+    $("audio").each(function(){
+        var $this=$(this);
+        var elementId=$this.attr("id");
+        if(elementId!=currentElementId){
+            $this[0].pause();
+        }
+    });
 }
 
 function countDown(count) {
@@ -81,13 +94,15 @@ function submitCurrentWord() {
         Game.socket.send(JSON.stringify(payload))
     	if ($('#currentWordIn').val() != $('#currentWord').html()) {
 	    var buzzer = $('#buzzer2')[0];
-            console.log(buzzer)
             buzzer.play();
 	}
     }
 }
 
 function startGame(message) {
+    $("audio").each(function(){
+	 $(this).bind("play",stopAll);
+    });
     $('#lookingDiv').hide()
 	$('#nameInput').hide()
 	$('#resultDiv').hide()
