@@ -66,10 +66,9 @@ function findOpponent() {
 }
 
 function showLookingDiv() {
-        $('#lookingDiv').show()
+    $('#lookingDiv').show()
 	$('#nameInput').hide()
-	var buzzer = $('#buzzer6')[0];
-        buzzer.play();
+	$('#buzzer6')[0].play();
 }
 
 function stopAll(e){
@@ -100,9 +99,8 @@ function submitCurrentWord() {
         }
         Game.socket.send(JSON.stringify(payload))
     	if ($('#currentWordIn').val() != $('#currentWord').html()) {
-	    var buzzer = $('#buzzer2')[0];
-            buzzer.play();
-	}
+	        $('#buzzer2')[0].play();
+	    }
     }
 }
 
@@ -117,11 +115,7 @@ function startGame(message) {
     $('#message').html(message)
     $('#gameField').show()
 	$('#currentWord').show()
-    // $('#timerDiv').show()
-	var buzzer = $('#buzzer4')[0];
-	buzzer.play()
-
-
+	$('#buzzer4')[0].play();
 }
 
 function gameOver(message) {
@@ -130,23 +124,20 @@ function gameOver(message) {
     $('#result').html(message)
 	$('#currentWordIn').val("")
 	if (message == "You won!") {
-		var buzzer = $('#buzzer1')[0];
-		console.log(buzzer)
-		buzzer.play();
+		$('#buzzer1')[0].play();
+        $('#waitingOtherPlayer').show()
 	} else {
-		var buzzer = $('#buzzer3')[0];
-		console.log(buzzer)
-		buzzer.play();
+		$('#buzzer3')[0].play();
 	}
 	$('#resultMessage').html(message)
     $('#rematchBtn').prop('disabled', false);
 	$('#gameField').hide()
-	// $('#timerDiv').hide()
 	$('#currentWord').html("")
 }
 
 
 function showResult(id) {
+    $('#waitingOtherPlayer').hide()
     $.get("/result/" + id, function(data) {
         console.log(data)
         $('#resultScreen').show()
@@ -168,6 +159,7 @@ function reset() {
     $('#resultScreen').hide()
     $('#nameInput').show()
     $('#opponentLeftDiv').hide()
+    $('#waitingOtherPlayer').hide()
     Game.socket.close()
     Game.connect()
 }
@@ -192,6 +184,7 @@ function opponentLeft() {
         $('#gameField').hide()
         $('#resultDiv').hide()
         $('#nameInput').hide()
+        $('#waitingOtherPlayer').hide()
         $('#opponentLeftDiv').show()
     }
 }
