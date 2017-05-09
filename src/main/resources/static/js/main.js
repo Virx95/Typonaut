@@ -141,12 +141,20 @@ function showResult(id) {
     $.get("/result/" + id, function(data) {
         console.log(data)
         $('#resultScreen').show()
-        var head = "<table class='table'><thead><tr><td>" + data.yourName + " <strong>" + data.yourScore + "</strong></td><td></td><td>" + data.opponentName + " <strong>" + data.opponentScore + "</strong></td></tr></thead>"
-        var bodyStart = "<tbody><tr><td>Your time</td><td>Word</td><td>Opponent time</td></tr>"
+        var head = "<table class='table text-center-c'><thead><tr><td class='active col-md-2'>" + data.yourName + " (You) <strong>" + data.yourScore + "</strong></td><td class='active col-md-2'></td><td class='active col-md-2'>" + data.opponentName + " <strong>" + data.opponentScore + "</strong></td></tr></thead>"
+        var bodyStart = "<tbody><tr><td class='active'>Your time</td><td class='active'>Word</td><td class='active'>Opponent time</td></tr>"
         head = head + bodyStart
         var row
         for (var i = 0; i < data.games.length; i++) {
-            row = "<tr><td>" + data.games[i].yourTime + "</td><td>" + data.games[i].word + "</td><td>" + data.games[i].opponentTime + "</td></tr>"
+            var yourClass, opponentclass
+            if (data.games[i].status == "WON") {
+                yourClass = "success"
+                opponentclass = "danger"
+            } else {
+                yourClass = "danger"
+                opponentclass = "success"
+            }
+            row = "<tr><td class='" + yourClass + "'>" + data.games[i].yourTime + "</td><td class='info'>" + data.games[i].word + "</td><td class='" + opponentclass + "'>" + data.games[i].opponentTime + "</td></tr>"
             head = head + row
         }
         var closure = "</tbody></table>"

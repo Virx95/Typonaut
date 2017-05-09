@@ -32,14 +32,14 @@
     <script> $('#lookingDiv').hide() </script>
 
     <div id="waitingOtherPlayer">
-        <h1 class="text-center"><strong>YOU WON!</strong> <br>Waiting for other player</h1>
+        <h1 class="text-center-c"><strong>YOU WON!</strong> <br>Waiting for other player</h1>
         <div class="loader"></div>
     </div>
     <script> $('#waitingOtherPlayer').hide() </script>
 
     <div id="gameField">
         <div id="gameField1">
-            <h1 id="currentWord" class="text-center"></h1>
+            <h1 id="currentWord" class="text-center-c"></h1>
             <h1 id="resultDiv">
                 <p id="result"></p>
             </h1>
@@ -74,8 +74,10 @@
         <div id="tableDiv">
 
         </div>
-        <button onclick="reset()">NEW GAME</button>
-        <button onclick="tryRematch()" id="rematchBtn">REMATCH</button>
+        <div class="col-md-12">
+            <button class="col-md-offset-2 col-md-4" onclick="reset()">NEW GAME</button>
+            <button class="col-md-4" onclick="tryRematch()" id="rematchBtn">REMATCH</button>
+        </div>
     </div>
     <script> $('#resultScreen').hide() </script>
 
