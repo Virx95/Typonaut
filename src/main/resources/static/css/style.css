@@ -40,6 +40,10 @@ h1 {
   padding: 20px;
 }
 
+#currentWord {
+    text-align: center;
+}
+
 input {
   margin: 40px 25px;
   width: 200px;
