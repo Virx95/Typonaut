@@ -68,7 +68,7 @@ function findOpponent() {
 function showLookingDiv() {
         $('#lookingDiv').show()
 	$('#nameInput').hide()
-	var buzzer = $('#buzzer2')[0];
+	var buzzer = $('#buzzer6')[0];
         buzzer.play();
 }
 
