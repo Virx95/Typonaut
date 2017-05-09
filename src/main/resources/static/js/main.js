@@ -113,6 +113,7 @@ function startGame(message) {
 	$('#nameInput').hide()
 	$('#resultDiv').hide()
     $('#message').html(message)
+    $('#opponent').html(message)
     $('#gameField').show()
 	$('#currentWord').show()
 	$('#buzzer4')[0].play();

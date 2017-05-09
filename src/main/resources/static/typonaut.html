@@ -26,7 +26,7 @@
     </div>
 
     <div id="lookingDiv">
-        <h1>LOOKING FOR OPPONENT</h1>
+        <h1><br><strong>LOOKING FOR OPPONENT</strong></h1>
         <div class="loader"></div>
     </div>
     <script> $('#lookingDiv').hide() </script>
@@ -39,10 +39,7 @@
 
     <div id="gameField">
         <div id="gameField1">
-            <h1 id="currentWord" class="text-center-c"></h1>
-            <h1 id="resultDiv">
-                <p id="result"></p>
-            </h1>
+            <h1 class="text-center-c"><span id="opponent"></span><br><strong id="currentWord"></strong></h1>
             <input id="currentWordIn" placeholder="Write here.." type="text">
             <button onclick="submitCurrentWord()" id="submitCurrentWord">SUBMIT</button>
         </div>
@@ -52,7 +49,6 @@
         <script> $('#messageDiv').hide() </script>
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:400' rel='stylesheet' type='text/css'>
-
 
         <script>
             // Enter key listener for submitting #currentWord value
@@ -81,9 +77,9 @@
     </div>
     <script> $('#resultScreen').hide() </script>
 
-    <div id="opponentLeftDiv">
-        <h1>OPPONENT LEFT</h1>
-        <button onclick="reset()">NEW GAME</button>
+    <div id="opponentLeftDiv" class="text-center-c">
+        <h1><br><strong>OPPONENT LEFT</strong></h1>
+        <button class="automargin" onclick="reset()">NEW GAME</button>
     </div>
     <script> $('#opponentLeftDiv').hide() </script>
 
