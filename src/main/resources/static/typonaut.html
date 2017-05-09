@@ -68,10 +68,14 @@
     <script> $('#resultDiv').hide() </script>
 
     <div id="resultScreen" class="table-responsive col-sm-6 col-sm-offset-3 i-no-padding i-no-margin-tb--xs">
+        <div>
+            <h3 id="resultMessage"></h3>
+        </div>
         <div id="tableDiv">
 
         </div>
         <button onclick="reset()">RESET</button>
+        <button onclick="tryRematch()" id="rematchBtn">REMATCH</button>
     </div>
     <script> $('#resultScreen').hide() </script>
 
@@ -80,7 +84,7 @@
 <audio id="buzzer2" src="fail.wav" type="audio/wav"></audio>
 <audio id="buzzer3" src="lose.mp3" type="audio/wav"></audio>
 <audio id="buzzer4" src="countdown.mp3" type="audio/wav"></audio>
-<audio id="buzzer5" src="start.mp3" type="audio/wav"></audio>
+<audio id="buzzer5" src="start.wav" type="audio/wav"></audio>
 <audio id="buzzer6" src="loading.wav" type="audio/wav"></audio>
 </body>
 </html>

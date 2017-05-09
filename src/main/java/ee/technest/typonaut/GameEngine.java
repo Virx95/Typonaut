@@ -24,26 +24,28 @@ public class GameEngine {
             playerOneOpt.get().setName(Json.getName(message));
             Optional<Player> playerTwoOpt = TyponautSession.getLookingTyper();
             if (playerTwoOpt.isPresent()) {
-                Player playerOne = playerOneOpt.get();
-                Player playerTwo = playerTwoOpt.get();
-                playerOne.setStatus(Status.STARTING);
-                playerTwo.setStatus(Status.STARTING);
-                playerOne.broadcast(Json.getMessageString("Your opponent is " + playerTwoOpt.get().getName(), Status.STARTING));
-                playerTwo.broadcast(Json.getMessageString("Your opponent is " + playerOne.getName(), Status.STARTING));
-
-                List<String> words = Words.getAllWords();
-                int randomNum = ThreadLocalRandom.current().nextInt(0, words.size());
-                playerOne.setWord(words.get(randomNum));
-                playerTwo.setWord(words.get(randomNum));
-                playerOne.setOpponent(playerTwo);
-                playerTwo.setOpponent(playerOne);
-
-                startCountDownTimer(playerOne, playerTwo);
+                startGame(playerOneOpt.get(), playerTwoOpt.get());
             } else {
                 playerOneOpt.get().setStatus(Status.LOOKING);
                 playerOneOpt.get().broadcast(Json.getLookingStatus());
             }
         }
+    }
+
+    public static void startGame(Player playerOne, Player playerTwo) throws Exception{
+        playerOne.setStatus(Status.STARTING);
+        playerTwo.setStatus(Status.STARTING);
+        playerOne.broadcast(Json.getMessageString("Your opponent is " + playerTwo.getName(), Status.STARTING));
+        playerTwo.broadcast(Json.getMessageString("Your opponent is " + playerOne.getName(), Status.STARTING));
+
+        List<String> words = Words.getAllWords();
+        int randomNum = ThreadLocalRandom.current().nextInt(0, words.size());
+        playerOne.setWord(words.get(randomNum));
+        playerTwo.setWord(words.get(randomNum));
+        playerOne.setOpponent(playerTwo);
+        playerTwo.setOpponent(playerOne);
+
+        startCountDownTimer(playerOne, playerTwo);
     }
 
     public static void startCountDownTimer(Player playerOne, Player playerTwo) {

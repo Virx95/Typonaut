@@ -40,6 +40,13 @@ Game.connect = (function() {
             case "SHOW_RESULT":
                 showResult(data.id);
                 break;
+            case "REMATCH":
+                opponentWantsRematch();
+                break;
+            case "QUIT":
+                opponentLeft();
+                break;
+
         }
     };
 
@@ -103,6 +110,7 @@ function startGame(message) {
     $("audio").each(function(){
 	 $(this).bind("play",stopAll);
     });
+    $('#resultScreen').hide()
     $('#lookingDiv').hide()
 	$('#nameInput').hide()
 	$('#resultDiv').hide()
@@ -130,6 +138,8 @@ function gameOver(message) {
 		console.log(buzzer)
 		buzzer.play();
 	}
+	$('#resultMessage').html(message)
+    $('#rematchBtn').prop('disabled', false);
 	$('#gameField').hide()
 	$('#timerDiv').hide()
 	$('#currentWord').html("")
@@ -159,4 +169,21 @@ function reset() {
     $('#nameInput').show()
     Game.socket.close()
     Game.connect()
+}
+
+function tryRematch() {
+    var payload = {
+        status: "REMATCH"
+    }
+    Game.socket.send(JSON.stringify(payload))
+    $('#resultMessage').html("Looking for rematch")
+}
+
+function opponentWantsRematch() {
+    $('#resultMessage').html("Opponent wants a rematch")
+}
+
+function opponentLeft() {
+    $('#resultMessage').html("Opponent left")
+    $('#rematchBtn').prop('disabled', true);
 }

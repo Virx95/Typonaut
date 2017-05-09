@@ -4,6 +4,7 @@ package ee.technest.typonaut.controller.dto;
 import ee.technest.typonaut.controller.dto.objects.Line;
 import ee.technest.typonaut.controller.dto.objects.Result;
 import ee.technest.typonaut.modal.Game;
+import ee.technest.typonaut.modal.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class DtoConverter {
         line.setWord(game.getWord());
         line.setYourTime(yourTime);
         line.setOpponentTime(opponentTime);
+        line.setStatus(yourTime < opponentTime ? Status.WON : Status.LOST);
         return line;
     }
 }

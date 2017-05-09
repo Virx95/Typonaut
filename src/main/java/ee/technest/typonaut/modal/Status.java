@@ -9,9 +9,11 @@ public enum Status {
     TIME_OUT,
     GAME_OVER,
     SHOW_RESULT,
+    REMATCH,
     WON,
     LOST,
     NONE,
+    QUIT,
     PING
 
 }
