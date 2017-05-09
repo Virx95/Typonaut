@@ -117,7 +117,7 @@ function startGame(message) {
     $('#message').html(message)
     $('#gameField').show()
 	$('#currentWord').show()
-    $('#timerDiv').show()
+    // $('#timerDiv').show()
 	var buzzer = $('#buzzer4')[0];
 	buzzer.play()
 
@@ -141,7 +141,7 @@ function gameOver(message) {
 	$('#resultMessage').html(message)
     $('#rematchBtn').prop('disabled', false);
 	$('#gameField').hide()
-	$('#timerDiv').hide()
+	// $('#timerDiv').hide()
 	$('#currentWord').html("")
 }
 
@@ -150,7 +150,7 @@ function showResult(id) {
     $.get("/result/" + id, function(data) {
         console.log(data)
         $('#resultScreen').show()
-        var head = "<table class='table'><thead><tr><td>" + data.yourName + " " + data.yourScore + "</td><td></td><td>" + data.opponentName + " " + data.opponentScore + "</td></tr></thead>"
+        var head = "<table class='table'><thead><tr><td>" + data.yourName + " <strong>" + data.yourScore + "</strong></td><td></td><td>" + data.opponentName + " <strong>" + data.opponentScore + "</strong></td></tr></thead>"
         var bodyStart = "<tbody><tr><td>Your time</td><td>Word</td><td>Opponent time</td></tr>"
         head = head + bodyStart
         var row
@@ -167,6 +167,7 @@ function showResult(id) {
 function reset() {
     $('#resultScreen').hide()
     $('#nameInput').show()
+    $('#opponentLeftDiv').hide()
     Game.socket.close()
     Game.connect()
 }
@@ -184,6 +185,13 @@ function opponentWantsRematch() {
 }
 
 function opponentLeft() {
-    $('#resultMessage').html("Opponent left")
-    $('#rematchBtn').prop('disabled', true);
+    if ($('#resultScreen').is(":visible")) {
+        $('#resultMessage').html("Opponent left")
+        $('#rematchBtn').prop('disabled', true);
+    } else {
+        $('#gameField').hide()
+        $('#resultDiv').hide()
+        $('#nameInput').hide()
+        $('#opponentLeftDiv').show()
+    }
 }

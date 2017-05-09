@@ -31,10 +31,10 @@
     </div>
     <script> $('#lookingDiv').hide() </script>
 
-    <div id="timerDiv">
-        <p id="timer"></p>
-    </div>
-    <script> $('#timerDiv').hide() </script>
+    <!--<div id="timerDiv">-->
+        <!--<p id="timer"></p>-->
+    <!--</div>-->
+    <!--<script> $('#timerDiv').hide() </script>-->
 
 
     <div id="gameField">
@@ -78,6 +78,12 @@
         <button onclick="tryRematch()" id="rematchBtn">REMATCH</button>
     </div>
     <script> $('#resultScreen').hide() </script>
+
+    <div id="opponentLeftDiv">
+        <h1>OPPONENT LEFT</h1>
+        <button onclick="reset()">NEW GAME</button>
+    </div>
+    <script> $('#opponentLeftDiv').hide() </script>
 
 </div>
 <audio id="buzzer1" src="suc.wav" type="audio/wav"></audio>

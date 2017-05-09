@@ -16,7 +16,7 @@ h1 {
 }
 
 
-#gameField1, #lookingDiv, #nameInput {
+#gameField1, #lookingDiv, #opponentLeftDiv {
   box-sizing: border-box;
   width: 260px;
   margin: 100px auto 0;
@@ -24,7 +24,18 @@ h1 {
   padding-bottom: 40px;
   border-radius: 3px;
 }
-#gameField1 h1, #lookingDiv h1 {
+
+#nameInput {
+  padding-top: 1px;
+  box-sizing: border-box;
+  width: 260px;
+  margin: 100px auto 0;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  padding-bottom: 40px;
+  border-radius: 3px;
+}
+
+#gameField1 h1, #lookingDiv h1, #opponentLeftDiv h1 {
   box-sizing: border-box;
   padding: 20px;
 }
