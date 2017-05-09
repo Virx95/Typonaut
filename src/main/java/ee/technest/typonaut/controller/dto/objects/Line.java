@@ -6,8 +6,8 @@ import ee.technest.typonaut.modal.Status;
 public class Line {
 
     private String word;
-    private long yourTime;
-    private long opponentTime;
+    private String yourTime;
+    private String opponentTime;
     private Status status;
 
     public String getWord() {
@@ -18,19 +18,19 @@ public class Line {
         this.word = word;
     }
 
-    public long getYourTime() {
+    public String getYourTime() {
         return yourTime;
     }
 
-    public void setYourTime(long yourTime) {
+    public void setYourTime(String yourTime) {
         this.yourTime = yourTime;
     }
 
-    public long getOpponentTime() {
+    public String getOpponentTime() {
         return opponentTime;
     }
 
-    public void setOpponentTime(long opponentTime) {
+    public void setOpponentTime(String opponentTime) {
         this.opponentTime = opponentTime;
     }
 

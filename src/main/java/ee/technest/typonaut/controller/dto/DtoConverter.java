@@ -8,6 +8,7 @@ import ee.technest.typonaut.modal.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DtoConverter {
 
@@ -51,9 +52,13 @@ public class DtoConverter {
     public static Line getLine(Game game, long yourTime, long opponentTime) {
         Line line = new Line();
         line.setWord(game.getWord());
-        line.setYourTime(yourTime);
-        line.setOpponentTime(opponentTime);
+        line.setYourTime(millisToSeconds(yourTime));
+        line.setOpponentTime(millisToSeconds(opponentTime));
         line.setStatus(yourTime < opponentTime ? Status.WON : Status.LOST);
         return line;
+    }
+
+    private static String millisToSeconds(long millis) {
+        return ( (float) millis / 1000) + " sec";
     }
 }
