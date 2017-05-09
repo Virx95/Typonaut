@@ -66,10 +66,9 @@ function findOpponent() {
 }
 
 function showLookingDiv() {
-        $('#lookingDiv').show()
+    $('#lookingDiv').show()
 	$('#nameInput').hide()
-	var buzzer = $('#buzzer6')[0];
-        buzzer.play();
+	$('#buzzer6')[0].play();
 }
 
 function stopAll(e){
@@ -100,9 +99,8 @@ function submitCurrentWord() {
         }
         Game.socket.send(JSON.stringify(payload))
     	if ($('#currentWordIn').val() != $('#currentWord').html()) {
-	    var buzzer = $('#buzzer2')[0];
-            buzzer.play();
-	}
+	        $('#buzzer2')[0].play();
+	    }
     }
 }
 
@@ -110,7 +108,6 @@ function startGame(message) {
     $("audio").each(function(){
 	 $(this).bind("play",stopAll);
     });
-	$('#opponentsName').html(message);
     $('#resultScreen').hide()
     $('#lookingDiv').hide()
 	$('#nameInput').hide()
@@ -118,42 +115,33 @@ function startGame(message) {
     $('#message').html(message)
     $('#gameField').show()
 	$('#currentWord').show()
-	$('#opponentsName').show()
-    $('#timerDiv').show()
-	var buzzer = $('#buzzer4')[0];
-	buzzer.play()
-
-
+	$('#buzzer4')[0].play();
 }
 
 function gameOver(message) {
 	$('#currentWord').hide()
-	$('#opponentsName').hide()
     $('#resultDiv').show()
     $('#result').html(message)
 	$('#currentWordIn').val("")
 	if (message == "You won!") {
-		var buzzer = $('#buzzer1')[0];
-		console.log(buzzer)
-		buzzer.play();
+		$('#buzzer1')[0].play();
+        $('#waitingOtherPlayer').show()
 	} else {
-		var buzzer = $('#buzzer3')[0];
-		console.log(buzzer)
-		buzzer.play();
+		$('#buzzer3')[0].play();
 	}
 	$('#resultMessage').html(message)
     $('#rematchBtn').prop('disabled', false);
 	$('#gameField').hide()
-	$('#timerDiv').hide()
 	$('#currentWord').html("")
 }
 
 
 function showResult(id) {
+    $('#waitingOtherPlayer').hide()
     $.get("/result/" + id, function(data) {
         console.log(data)
         $('#resultScreen').show()
-        var head = "<table class='table'><thead><tr><td>" + data.yourName + " " + data.yourScore + "</td><td></td><td>" + data.opponentName + " " + data.opponentScore + "</td></tr></thead>"
+        var head = "<table class='table'><thead><tr><td>" + data.yourName + " <strong>" + data.yourScore + "</strong></td><td></td><td>" + data.opponentName + " <strong>" + data.opponentScore + "</strong></td></tr></thead>"
         var bodyStart = "<tbody><tr><td>Your time</td><td>Word</td><td>Opponent time</td></tr>"
         head = head + bodyStart
         var row
@@ -170,6 +158,8 @@ function showResult(id) {
 function reset() {
     $('#resultScreen').hide()
     $('#nameInput').show()
+    $('#opponentLeftDiv').hide()
+    $('#waitingOtherPlayer').hide()
     Game.socket.close()
     Game.connect()
 }
@@ -187,6 +177,14 @@ function opponentWantsRematch() {
 }
 
 function opponentLeft() {
-    $('#resultMessage').html("Opponent left")
-    $('#rematchBtn').prop('disabled', true);
+    if ($('#resultScreen').is(":visible")) {
+        $('#resultMessage').html("Opponent left")
+        $('#rematchBtn').prop('disabled', true);
+    } else {
+        $('#gameField').hide()
+        $('#resultDiv').hide()
+        $('#nameInput').hide()
+        $('#waitingOtherPlayer').hide()
+        $('#opponentLeftDiv').show()
+    }
 }
