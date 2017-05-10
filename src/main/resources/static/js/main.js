@@ -55,13 +55,18 @@ Game.connect = (function() {
 Game.connect()
 
 function findOpponent() {
-    var name = $('#chooseName').val()
-    if (name !== "" || name !== null) {
+    var name = $('#chooseName').val();
+    if (name !== "" && name !== null) {
+        $('#errorMessage').hide();
         var payload = {
             name: name,
             status: "LOOKING"
         }
         Game.socket.send(JSON.stringify(payload))
+    } else {
+        $('#errorMessage').show();
+        var buzzer = $('#buzzer2')[0];
+        buzzer.play()
     }
 }
 
