@@ -25,6 +25,11 @@ h1 {
   border-radius: 3px;
 }
 
+.errorMessage {
+  padding-left: 20px;
+  color:red;
+}
+
 #nameInput {
   padding-top: 1px;
   box-sizing: border-box;
